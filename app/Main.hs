@@ -2,36 +2,49 @@ module Main where
 
 import qualified Catarack_lib (someFunc)
 
-el :: String -> String -> String
+newtype Html = Html String
+
+render :: Html -> String
+render (Html page) = page
+
+newtype HtmlElem = HtmlElem String
+
+eUnwrap :: HtmlElem -> String
+eUnwrap (HtmlElem s) = s
+
+append_ :: HtmlElem -> HtmlElem -> HtmlElem
+append_ (HtmlElem s1) (HtmlElem s2) = HtmlElem $ s1 <> s2
+
+type Tag = String
+type Title = String
+
+el :: Tag -> HtmlElem -> HtmlElem
 el tag content =
-  "<" <> tag <> ">" <> content <> "</" <> tag <> ">"
+  HtmlElem ("<" <> tag <> ">") `append_` content `append_` HtmlElem ("</" <> tag <> ">")
 
-html_ :: String -> String
-html_ = el "html"
+html_ :: HtmlElem -> Html
+html_ page = Html $ eUnwrap (el "html" page)
 
-body_ :: String -> String
+body_ :: HtmlElem -> HtmlElem
 body_ = el "body"
 
-fullwrapBody :: String -> String
-fullwrapBody context = html_ $ body_ context
-
-head_ :: String -> String
+head_ :: HtmlElem -> HtmlElem
 head_ = el "head"
 
-title_ :: String -> String
-title_ = el "title"
+title_ :: Title -> HtmlElem
+title_ title = el "title" (HtmlElem title)
 
-p_ :: String -> String
+p_ :: HtmlElem -> HtmlElem
 p_ = el "p"
 
-h1_ :: String -> String
+h1_ :: HtmlElem -> HtmlElem
 h1_ = el "h1"
 
-makeHTML :: String -> String -> String
-makeHTML title body = html_ $ head_ (title_ title) <> body_ body
+makeHTML :: Title -> HtmlElem -> Html
+makeHTML title body = html_ $ head_ (title_ title) `append_` body_ body
 
-myhtml :: String
-myhtml = makeHTML "My title!" (h1_ "Hello, World!" <> p_ "This is April!")
+myhtml :: Html
+myhtml = makeHTML "My Title!" (HtmlElem "Hello, World!" `append_` HtmlElem "This is April!")
 
 main :: IO ()
 main = do
