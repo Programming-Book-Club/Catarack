@@ -29,8 +29,21 @@ append_ (HtmlElem s1) (HtmlElem s2) = HtmlElem $ s1 <> s2
 type Tag = String
 type Title = String
 
+escape :: String -> String
+escape =
+  let predicate ch =
+        case ch of
+          '<' -> "&lt;"
+          '>' -> "&gt;"
+          '&' -> "&amp;"
+          '"' -> "&quot;"
+          '\'' -> "&#39;"
+          c -> [c]
+  in
+    concatMap predicate
+
 text_ :: String -> HtmlElem
-text_ = HtmlElem
+text_ = HtmlElem . escape
 
 el :: Tag -> HtmlElem -> HtmlElem
 el tag content =
