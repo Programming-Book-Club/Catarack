@@ -8,10 +8,12 @@ module Html
     title_,
     p_,
     h1_,
+    ol_,
+    ul_,
     text_,
+    textList_,
     append_,
     makeHTML
   ) where
 
 import Html.Internal
-
