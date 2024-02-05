@@ -1,4 +1,3 @@
-module Catarack_lib (someFunc) where
+module Catarack_lib (Catarack(..)) where
+import Catarack.Internal
 
-someFunc :: IO ()
-someFunc = putStrLn "Hewwo from inside module"
