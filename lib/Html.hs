@@ -2,6 +2,7 @@ module Html
   ( Html,
     HtmlElem,
     render,
+    preRender,
     Title,
     html_,
     body_,
@@ -12,7 +13,9 @@ module Html
     ul_,
     text_,
     textList_,
+    code_,
     append_,
+    unitHtml,
     makeHTML
   ) where
 
