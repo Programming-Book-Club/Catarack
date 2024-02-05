@@ -1,10 +1,14 @@
 module Html.Internal where
 
 -- Type definintions
-newtype Html = Html String
-newtype HtmlElem = HtmlElem String
+newtype Html =
+  Html String
+
+newtype HtmlElem =
+  HtmlElem String
 
 type Tag = String
+
 type Title = String
 
 -- Element level constructors
@@ -63,8 +67,7 @@ tagReducation tag = foldr (append_ . el tag) unitHtml
 -- Internal utilities
 el :: Tag -> HtmlElem -> HtmlElem
 el tag content =
-  HtmlElem
-    ("<" <> tag <> ">")
+  HtmlElem ("<" <> tag <> ">")
     `append_` content
     `append_` HtmlElem ("</" <> tag <> ">")
 
@@ -81,5 +84,4 @@ escape =
           '"' -> "&quot;"
           '\'' -> "&#39;"
           c -> [c]
-  in
-    concatMap predicate
+   in concatMap predicate

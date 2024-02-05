@@ -1,4 +1,5 @@
 module Catarack.Internal where
+
 -- import Html
 import Numeric.Natural
 
@@ -33,7 +34,7 @@ instance Semigroup a => Semigroup (Catarack a) where
   (CodeBlock b1) <> (CodeBlock b2) = CodeBlock (b1 <> b2)
   (Document d1) <> (Document d2) = Document (d1 ++ d2)
   (Document d) <> el = Document (d ++ [el])
-  el1 <> (Document (el2 : t)) = flatten $ Document ((el1 <> el2) : t)
+  el1 <> (Document (el2:t)) = flatten $ Document ((el1 <> el2) : t)
   el1 <> el2 = Document [el1, el2]
 
 instance Semigroup a => Monoid (Catarack a) where

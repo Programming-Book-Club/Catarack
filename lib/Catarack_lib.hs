@@ -1,3 +1,5 @@
-module Catarack_lib (Catarack(..)) where
-import Catarack.Internal
+module Catarack_lib
+  ( Catarack(..)
+  ) where
 
+import Catarack.Internal
